@@ -20,13 +20,11 @@ public class PersonController {
 
     private final PersonValidator personValidator;
     private final PersonService personService;
-    private final BookService bookService;
 
     @Autowired
-    public PersonController(PersonValidator personValidator, PersonService personService, BookService bookService) {
+    public PersonController(PersonValidator personValidator, PersonService personService) {
         this.personValidator = personValidator;
         this.personService = personService;
-        this.bookService = bookService;
     }
 
     @GetMapping()
@@ -37,7 +35,7 @@ public class PersonController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable("id") int id, Model model) {
-        model.addAttribute("books", bookService.findBookByOwnerId(id));
+//        model.addAttribute("books", bookService.findBookByOwnerId(id));
         model.addAttribute("person", personService.findOne(id));
         return "people/show";
     }

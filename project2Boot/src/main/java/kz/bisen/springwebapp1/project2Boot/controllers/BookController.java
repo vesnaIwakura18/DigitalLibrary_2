@@ -21,7 +21,6 @@ import java.util.Optional;
 public class BookController {
 
     private final PersonService personService;
-
     private final BookValidator bookValidator;
     private final BookService bookService;
 
@@ -35,22 +34,11 @@ public class BookController {
 
     @GetMapping()
     public String getAll(Model model, @RequestParam(value = "page", required = false) Optional<Integer> page,
-                                     @RequestParam(value = "books per page", required = false) Optional<Integer> booksPerPage,
+                                     @RequestParam(value = "books_per_page", required = false) Optional<Integer> booksPerPage,
                                     @RequestParam(value = "sorted_by_year", required = false) Optional<Boolean> isSorted) {
-        if (page.isPresent() && booksPerPage.isPresent() && isSorted.isPresent()) {
-            model.addAttribute("books", bookService.findAll(page.get(), booksPerPage.get(), isSorted.get()));
-            return "books/index";
-        } else if (page.isEmpty() && booksPerPage.isEmpty() && isSorted.isEmpty()) {
-            model.addAttribute("books", bookService.findAll());
-            return "books/index";
-        } else if (page.isPresent() && booksPerPage.isPresent()) {
-            model.addAttribute("books", bookService.findAll(page.get(), booksPerPage.get()));
-            return "books/index";
-        } else if (page.isEmpty() && booksPerPage.isEmpty())
-            model.addAttribute("books", bookService.findAll(isSorted.get()));
-            return "books/index";
+        model.addAttribute("books", bookService.findAll(page, booksPerPage, isSorted));
+        return "books/index";
     }
-
 
 
     @GetMapping("/{id}")

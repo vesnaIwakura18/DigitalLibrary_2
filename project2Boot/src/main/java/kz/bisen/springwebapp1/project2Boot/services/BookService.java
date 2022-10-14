@@ -26,23 +26,13 @@ public class BookService {
         this.personService = personService;
     }
 
-    public List<Book> findAll() {
+    public List<Book> findAll(Optional<Integer> page, Optional<Integer> booksPerPage, Optional<Boolean> isSorted) {
+        if (page.isPresent() && booksPerPage.isPresent() && isSorted.isPresent()) {
+            if(isSorted.get())
+                return bookRepository.findAll(PageRequest.of(page.get(), booksPerPage.get(), Sort.by("yearOfProduction"))).getContent();
+            return bookRepository.findAll(PageRequest.of(page.get(), booksPerPage.get())).getContent();
+        }
         return bookRepository.findAll();
-    }
-
-    public List<Book> findAll(int page, int booksPerPage) { // TODO change
-        return bookRepository.findAll(PageRequest.of(page, booksPerPage)).getContent();
-    }
-    public List<Book> findAll(boolean isSorted) {
-        if (isSorted)
-            return bookRepository.findAll(Sort.by("yearOfProduction"));
-        return bookRepository.findAll();
-    }
-
-    public List<Book> findAll(int page, int booksPerPage, boolean isSorted) {
-        if (isSorted)
-            return bookRepository.findAll(PageRequest.of(page, booksPerPage, Sort.by("yearOfProduction"))).getContent();
-        return bookRepository.findAll(PageRequest.of(page, booksPerPage)).getContent();
     }
 
     public Book findOne(int id) {

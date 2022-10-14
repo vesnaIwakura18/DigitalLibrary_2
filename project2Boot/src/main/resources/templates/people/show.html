@@ -6,10 +6,10 @@
 </head>
 <body>
 <p th:text="${person.getFio()} + ', ' + ${person.getBirthDate()}">VALUE</p>
-<div th:if="${books.isEmpty()}" th:text="'Человек пока не взял ни одной книги'">value</div>
+<div th:if="${person.getBooks().isEmpty()}" th:text="'Человек пока не взял ни одной книги'">value</div>
 
-<div th:unless="${books.isEmpty()}"> <hr/> <h4> Книги: </h4>
-<div th:each="book : ${books}">
+<div th:unless="${person.getBooks().isEmpty()}"> <hr/> <h4> Книги: </h4>
+<div th:each="book : ${person.getBooks()}">
 
 <a style="color: #eee;" th:styleappend="${book.getOverdue()} ? 'color : red' : 'color : blue'" th:text="${book.getName()} + ', ' + ${book.getAuthor()} + ', ' + ${book.getYearOfProduction()}">value</a>
 

@@ -18,17 +18,17 @@ public class Book {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "book_name")
+    @Column(name = "title")
     @NotEmpty(message="Название книги не может быть пустым")
     @Size(min = 2, max = 150, message = "Некорректное название")
     private String name;
 
-    @Column(name = "book_author")
+    @Column(name = "author")
     @NotEmpty(message = "Имя не может быть пустым")
     @Size(min = 2, max = 100, message = "Некорректное имя")
     private String author;
 
-    @Column(name = "book_year_of_production")
+    @Column(name = "year_of_production")
     @Min(value = 0, message = "Некорректная дата публикации")
     private String yearOfProduction;
 
@@ -39,12 +39,12 @@ public class Book {
     @Transient
     private String startingWord;
 
-    @Column(name = "date_of_taking")
+    @Column(name = "taken_at_date")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dateOfTaking;
 
-    @Column(name = "taken_at")
+    @Column(name = "taken_at_timestamp")
     @Temporal(TemporalType.TIMESTAMP)
     private Date takenAt;
 

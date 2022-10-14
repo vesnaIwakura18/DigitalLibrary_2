@@ -1,11 +1,10 @@
 package kz.bisen.springwebapp1.project2Boot.models;
 
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.List;
 
 @Entity
@@ -26,9 +25,19 @@ public class Person {
     @Min(value = 1900, message = "Некорректная дата рождения")
     private String birthDate;
 
-    @OneToMany(mappedBy = "owner")
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "username")
+    @Length(min = 3, max = 15, message = "Длина имени пользователя должна быть от 3 до 15 включительно")
+    @Pattern(regexp = "[a-z]\\w+")
+    private String username;
+
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER)
     private List<Book> books;
 
+    @Column(name = "role")
+    private String role;
 
     public Person() {
     }
@@ -68,5 +77,29 @@ public class Person {
 
     public void setBooks(List<Book> books) {
         this.books = books;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

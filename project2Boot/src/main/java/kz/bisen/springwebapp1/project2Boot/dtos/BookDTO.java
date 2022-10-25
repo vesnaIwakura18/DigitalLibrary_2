@@ -1,64 +1,37 @@
-package kz.bisen.springwebapp1.project2Boot.models;
+package kz.bisen.springwebapp1.project2Boot.dtos;
 
-import javax.persistence.*;
+import kz.bisen.springwebapp1.project2Boot.models.Reader;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-@Entity
-@Table(name = "Book")
-public class Book {
-    @Id
-    @Column(name = "book_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class BookDTO {
     private int id;
 
-    @Column(name = "title")
     @NotEmpty(message="Название книги не может быть пустым")
     @Size(min = 2, max = 150, message = "Некорректное название")
     private String title;
 
-    @Column(name = "author")
     @NotEmpty(message = "Имя не может быть пустым")
     @Size(min = 2, max = 100, message = "Некорректное имя")
     private String author;
 
-    @Column(name = "issue_year")
     @Min(value = 0, message = "Некорректная дата публикации")
     private String issueYear;
-
-    @ManyToOne
-    @JoinColumn(name = "reader_id", referencedColumnName = "reader_id")
-    private Reader owner;
 
 //    @Transient
 //    private List<Optional<String>> searchBy = List.of(Optional.of("title"), Optional.of("author"), Optional.of("issueYear"));
 
-    @Column(name = "datetime_taken")
-    private LocalDateTime dateTimeTaken;
-
-    @Transient
-    private boolean isOverdue;
-
-    public Book() {}
-
-    public Book(String title, String author, String issueYear, Reader owner) {
+    public BookDTO(String title, String author, String issueYear, Reader owner, List<Optional<String>> searchBy) {
         this.title = title;
         this.author = author;
         this.issueYear = issueYear;
-        this.owner = owner;
+//        this.searchBy = searchBy;
     }
 
-    public LocalDateTime getDateTimeTaken() {
-        return dateTimeTaken;
-    }
-
-    public void setDateTimeTaken(LocalDateTime dateTimeTaken) {
-        this.dateTimeTaken = dateTimeTaken;
-    }
+    public BookDTO() {}
 
     public int getId() {
         return id;
@@ -92,27 +65,11 @@ public class Book {
         this.issueYear = issueYear;
     }
 
-    public Reader getReader() {
-        return owner;
-    }
-
-    public void setReader(Reader owner) {
-        this.owner = owner;
-    }
-
 //    public List<Optional<String>> getSearchBy() {
 //        return searchBy;
 //    }
 //
-//    public void setSearchBy(List<Optional<String>> startingWord) {
-//        this.searchBy = startingWord;
+//    public void setSearchBy(List<Optional<String>> searchBy) {
+//        this.searchBy = searchBy;
 //    }
-
-    public boolean getOverdue() {
-        return isOverdue;
-    }
-
-    public void setOverdue(boolean overdue) {
-        isOverdue = overdue;
-    }
 }

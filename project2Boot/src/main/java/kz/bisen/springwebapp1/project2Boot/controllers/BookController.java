@@ -1,110 +1,95 @@
 package kz.bisen.springwebapp1.project2Boot.controllers;
 
 
+import kz.bisen.springwebapp1.project2Boot.dtos.BookDTO;
+import kz.bisen.springwebapp1.project2Boot.dtos.impl.DefaultBookDTOBuilder;
+import kz.bisen.springwebapp1.project2Boot.dtos.impl.DefaultReaderDTOBuilder;
 import kz.bisen.springwebapp1.project2Boot.models.Book;
-import kz.bisen.springwebapp1.project2Boot.models.Person;
-import kz.bisen.springwebapp1.project2Boot.services.BookService;
-import kz.bisen.springwebapp1.project2Boot.services.PersonService;
+import kz.bisen.springwebapp1.project2Boot.services.impl.DefaultBookService;
 import kz.bisen.springwebapp1.project2Boot.util.BookValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 
-@Controller
-@RequestMapping("/books")
+@RestController
+@RequestMapping("/book")
 public class BookController {
-
-    private final PersonService personService;
     private final BookValidator bookValidator;
-    private final BookService bookService;
+    private final DefaultBookService defaultBookService;
+    private final DefaultBookDTOBuilder defaultBookDTOBuilder;
 
     @Autowired
-    public BookController(BookValidator bookValidator, BookService bookService, PersonService personService) {
+    public BookController(BookValidator bookValidator,
+                          DefaultBookService defaultBookService,
+                          DefaultBookDTOBuilder defaultBookDTOBuilder) {
         this.bookValidator = bookValidator;
-        this.bookService = bookService;
-        this.personService = personService;
+        this.defaultBookService = defaultBookService;
+        this.defaultBookDTOBuilder = defaultBookDTOBuilder;
     }
 
 
     @GetMapping()
-    public String getAll(Model model, @RequestParam(value = "page", required = false) Optional<Integer> page,
-                                     @RequestParam(value = "books_per_page", required = false) Optional<Integer> booksPerPage,
-                                    @RequestParam(value = "sorted_by_year", required = false) Optional<Boolean> isSorted) {
-        model.addAttribute("books", bookService.findAll(page, booksPerPage, isSorted));
-        return "books/index";
+    public List<BookDTO> getAll(@RequestParam(value = "page") int page,
+                                @RequestParam(value = "book_per_page") int bookPerPage,
+                                @RequestParam(value = "sorted_by_year", required = false) Optional<Boolean> isSorted) {
+        final List<Book> books = defaultBookService.findAll(page, bookPerPage, isSorted);
+        return books.stream().map(defaultBookDTOBuilder::fromBook).toList();
     }
 
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id, Model model, @ModelAttribute("person") Person person) {
-        model.addAttribute("people", personService.findAll());
-        model.addAttribute("book", bookService.findOne(id));
-        return "books/show";
-    }
-
-    @GetMapping("/new")
-    public String newBook(@ModelAttribute("book") Book book) {
-        return "books/new";
+    public BookDTO getBook(@PathVariable("id") int id) {
+        final Book book = defaultBookService.findOne(id);
+        return defaultBookDTOBuilder.fromBook(book);
     }
 
     @PostMapping()
-    public String create(@ModelAttribute("book") @Valid Book book,
-                         BindingResult bindingResult) {
-        bookValidator.validate(book, bindingResult);
+    public void createBook(@Valid BookDTO bookDTO,
+                             BindingResult bindingResult) throws Exception {
+        bookValidator.validate(bookDTO, bindingResult);
         if (bindingResult.hasErrors())
-            return "books/new";
+            throw new Exception();
 
-        bookService.save(book);
-        return "redirect:/books";
+        final Book book = defaultBookDTOBuilder.fromBookDTO(bookDTO);
+        defaultBookService.save(book);
     }
 
-    @GetMapping("/{id}/edit")
-    public String edit(Model model, @PathVariable("id") int id) {
-        model.addAttribute("book", bookService.findOne(id));
-        return "books/edit";
-    }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult,
-                         @PathVariable("id") int id) {
-        bookValidator.validate(book, bindingResult);
+    public void updateBook(@Valid BookDTO bookDTO,
+                             BindingResult bindingResult,
+                             @PathVariable("id") int id) throws Exception {
+        bookValidator.validate(bookDTO, bindingResult);
         if (bindingResult.hasErrors())
-            return "books/edit";
+            throw new Exception();
 
-        bookService.update(id, book);
-        return "redirect:/books";
+        final Book book = defaultBookDTOBuilder.fromBookDTO(bookDTO);
+        defaultBookService.update(id, book);
     }
 
     @DeleteMapping("/{id}")
-    public String delete(@PathVariable("id") int id) {
-        bookService.delete(id);
-        return "redirect:/books";
+    public void deleteBook(@PathVariable("id") int id) {
+        defaultBookService.delete(id);
     }
 
     @PatchMapping("/{id}/select")
-    public String select(@ModelAttribute("person") Person person, @PathVariable("id") int id) {
-        bookService.select(person.getId(), id);
-        return "redirect:/books";
+    public void selectBook(int readerId, @PathVariable("id") int id) {
+        defaultBookService.select(readerId, id);
     }
 
     @PatchMapping("/{id}/reject")
-    public String reject(@PathVariable("id") int id) {
-        bookService.reject(id);
-        return "redirect:/books";
+    public void rejectBook(@PathVariable("id") int id) {
+        defaultBookService.reject(id);
     }
 
     @GetMapping("/search")
-    public String search(@RequestParam(value = "value", required = false) String startingWord, Model model, @ModelAttribute("book") Book book) {
-        if (startingWord != null)
-            model.addAttribute("books", bookService.findBookByNameStartingWith(startingWord));
-        if (book.getStartingWord() != null)
-            model.addAttribute("books", bookService.findBookByNameStartingWith(book.getStartingWord()));
-        return "books/search";
+    public List<BookDTO> search(@RequestParam(value = "searchBy", required = false) String searchBy) {
+        return defaultBookService.findBookStartingWith(searchBy).stream()
+                .map(defaultBookDTOBuilder::fromBook).toList();
     }
 }

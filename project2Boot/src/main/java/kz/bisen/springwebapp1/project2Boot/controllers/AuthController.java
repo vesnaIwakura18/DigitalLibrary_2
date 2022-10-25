@@ -1,30 +1,31 @@
 package kz.bisen.springwebapp1.project2Boot.controllers;
 
-import kz.bisen.springwebapp1.project2Boot.models.Person;
-import kz.bisen.springwebapp1.project2Boot.services.PersonService;
-import kz.bisen.springwebapp1.project2Boot.util.PersonValidator;
+import kz.bisen.springwebapp1.project2Boot.dtos.ReaderDTO;
+import kz.bisen.springwebapp1.project2Boot.dtos.impl.DefaultReaderDTOBuilder;
+import kz.bisen.springwebapp1.project2Boot.models.Reader;
+import kz.bisen.springwebapp1.project2Boot.services.impl.DefaultReaderService;
+import kz.bisen.springwebapp1.project2Boot.util.ReaderValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
-@Controller
+@RestController
 @RequestMapping("/auth")
 public class AuthController {
+    private final ReaderValidator readerValidator;
 
-    private final PersonValidator personValidator;
+    private final DefaultReaderService defaultReaderService;
 
-    private final PersonService personService;
+    private final DefaultReaderDTOBuilder defaultReaderDTOBuilder;
 
     @Autowired
-    public AuthController(PersonValidator personValidator, PersonService personService) {
-        this.personValidator = personValidator;
-        this.personService = personService;
+    public AuthController(ReaderValidator readerValidator,
+                          DefaultReaderService defaultReaderService,
+                          DefaultReaderDTOBuilder defaultReaderDTOBuilder) {
+        this.readerValidator = readerValidator;
+        this.defaultReaderService = defaultReaderService;
+        this.defaultReaderDTOBuilder = defaultReaderDTOBuilder;
     }
 
     @GetMapping("/login")
@@ -32,23 +33,13 @@ public class AuthController {
         return "auth/login";
     }
 
-    @GetMapping("/registration")
-    public String registrationPage(@ModelAttribute("person") Person person) {
-        return "auth/registration";
-    }
-
     @PostMapping("/registration")
-    public String performRegistration(@ModelAttribute("person") @Valid Person person,
-                                      BindingResult bindingResult) {
-        personValidator.validate(person, bindingResult);
+    public void performRegistration(@Valid ReaderDTO readerDTO,
+                                      BindingResult bindingResult) throws Exception {
+        readerValidator.validate(readerDTO, bindingResult);
         if(bindingResult.hasErrors())
-            return "auth/registration";
-        personService.save(person);
-        return "/auth/login";
-    }
-
-    @GetMapping("/feed")
-    public String mainPage() {
-        return "auth/main";
+            throw new Exception();
+        final Reader reader = defaultReaderDTOBuilder.fromReaderDTO(readerDTO);
+        defaultReaderService.save(reader);
     }
 }

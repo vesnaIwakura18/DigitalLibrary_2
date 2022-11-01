@@ -23,7 +23,7 @@ public class Reader {
 
     @Column(name = "birth_date")
     @Min(value = 1900, message = "Некорректная дата рождения")
-    private String birthDate;
+    private int birthDate;
 
     @Column(name = "password")
     private String password;
@@ -41,9 +41,12 @@ public class Reader {
 
     public Reader() {}
 
-    public Reader(String fullName, String birthDate) {
+    public Reader(String fullName, int birthDate, String password, String username, String role) {
         this.fullName = fullName;
         this.birthDate = birthDate;
+        this.password = password;
+        this.username = username;
+        this.role = role;
     }
 
     public int getId() {
@@ -62,11 +65,11 @@ public class Reader {
         this.fullName = fullName;
     }
 
-    public String getBirthDate() {
+    public int getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(int birthDate) {
         this.birthDate = birthDate;
     }
 

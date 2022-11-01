@@ -9,12 +9,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
-public class DefaultReaderDetailsService implements UserDetailsService, ReaderDetailsService
-{
+public class DefaultReaderDetailsService implements UserDetailsService, ReaderDetailsService {
     private final ReaderRepository readerRepository;
 
     @Autowired
@@ -25,7 +23,7 @@ public class DefaultReaderDetailsService implements UserDetailsService, ReaderDe
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<Reader> foundPerson = readerRepository.findByUsername(username);
-        if(foundPerson.isEmpty())
+        if (foundPerson.isEmpty())
             throw new UsernameNotFoundException("Упс! Пользователь не найден...");
         return new ReaderDetails(foundPerson.get());
     }

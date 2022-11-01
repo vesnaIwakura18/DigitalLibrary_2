@@ -1,4 +1,4 @@
-package kz.bisen.springwebapp1.project2Boot.dtos;
+package kz.bisen.springwebapp1.project2Boot.dtos.Book;
 
 import kz.bisen.springwebapp1.project2Boot.models.Reader;
 import javax.validation.constraints.Min;
@@ -21,14 +21,10 @@ public class BookDTO {
     @Min(value = 0, message = "Некорректная дата публикации")
     private String issueYear;
 
-//    @Transient
-//    private List<Optional<String>> searchBy = List.of(Optional.of("title"), Optional.of("author"), Optional.of("issueYear"));
-
-    public BookDTO(String title, String author, String issueYear, Reader owner, List<Optional<String>> searchBy) {
+    public BookDTO(String title, String author, String issueYear) {
         this.title = title;
         this.author = author;
         this.issueYear = issueYear;
-//        this.searchBy = searchBy;
     }
 
     public BookDTO() {}

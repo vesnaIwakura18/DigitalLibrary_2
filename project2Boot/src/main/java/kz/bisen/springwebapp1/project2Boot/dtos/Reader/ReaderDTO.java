@@ -1,23 +1,22 @@
-package kz.bisen.springwebapp1.project2Boot.dtos;
+package kz.bisen.springwebapp1.project2Boot.dtos.Reader;
 
-import kz.bisen.springwebapp1.project2Boot.models.Book;
 import org.hibernate.validator.constraints.Length;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 public class ReaderDTO {
     private int id;
 
     @NotEmpty(message = "ФИО не может быть пустым")
     @Size(min = 2, max = 100, message = "Слишком короткое либо слишком длинное ФИО")
-    @Pattern(regexp = "[A-Z]\\w+ [A-Z]\\w+ [A-Z]\\w+", message ="Некорректное ФИО")
+    @Pattern(regexp = "[A-Z]\\w+ [A-Z]\\w+ [A-Z]\\w+", message = "Некорректное ФИО")
     private String fullName;
 
     @Min(value = 1900, message = "Некорректная дата рождения")
-    private String birthDate;
+    private int birthDate;
 
     private String password;
 
@@ -25,7 +24,7 @@ public class ReaderDTO {
     @Pattern(regexp = "[a-z]\\w+")
     private String username;
 
-    public ReaderDTO(String fullName, String birthDate, String password, String username, List<Book> books) {
+    public ReaderDTO(String fullName, int birthDate, String password, String username) {
         this.fullName = fullName;
         this.birthDate = birthDate;
         this.password = password;
@@ -51,11 +50,11 @@ public class ReaderDTO {
         this.fullName = fullName;
     }
 
-    public String getBirthDate() {
+    public int getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(String birthDate) {
+    public void setBirthDate(int birthDate) {
         this.birthDate = birthDate;
     }
 

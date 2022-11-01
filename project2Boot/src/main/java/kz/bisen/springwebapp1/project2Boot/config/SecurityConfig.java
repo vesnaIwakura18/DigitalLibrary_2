@@ -11,11 +11,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
     private final DefaultReaderDetailsService defaultReaderDetailsService;
 
     @Autowired
@@ -25,7 +23,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.authorizeRequests().antMatchers("/admin").hasRole("ADMIN")
+        httpSecurity
+                .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/admin").hasRole("ADMIN")
                 .antMatchers("/auth/login", "/auth/registration", "/error").permitAll()
                 .anyRequest().hasAnyRole("USER", "ADMIN")
                 .and()
@@ -34,7 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/reader", true)
                 .failureUrl("/auth/login?error")
                 .and()
-                .logout().logoutUrl("/logout").logoutSuccessUrl("/auth/login");
+                .logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/auth/login");
     }
 
     @Override

@@ -17,7 +17,7 @@ public class Book {
     private int id;
 
     @Column(name = "title")
-    @NotEmpty(message="Название книги не может быть пустым")
+    @NotEmpty(message = "Название книги не может быть пустым")
     @Size(min = 2, max = 150, message = "Некорректное название")
     private String title;
 
@@ -34,22 +34,19 @@ public class Book {
     @JoinColumn(name = "reader_id", referencedColumnName = "reader_id")
     private Reader owner;
 
-//    @Transient
-//    private List<Optional<String>> searchBy = List.of(Optional.of("title"), Optional.of("author"), Optional.of("issueYear"));
-
     @Column(name = "datetime_taken")
     private LocalDateTime dateTimeTaken;
 
     @Transient
     private boolean isOverdue;
 
-    public Book() {}
+    public Book() {
+    }
 
-    public Book(String title, String author, String issueYear, Reader owner) {
+    public Book(String title, String author, String issueYear) {
         this.title = title;
         this.author = author;
         this.issueYear = issueYear;
-        this.owner = owner;
     }
 
     public LocalDateTime getDateTimeTaken() {
@@ -99,14 +96,6 @@ public class Book {
     public void setReader(Reader owner) {
         this.owner = owner;
     }
-
-//    public List<Optional<String>> getSearchBy() {
-//        return searchBy;
-//    }
-//
-//    public void setSearchBy(List<Optional<String>> startingWord) {
-//        this.searchBy = startingWord;
-//    }
 
     public boolean getOverdue() {
         return isOverdue;

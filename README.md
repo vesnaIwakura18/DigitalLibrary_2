@@ -1,4 +1,4 @@
-# DigitalLibrary
+# Digital_Library_2.0
 Реализация первого проекта на Spring Boot. БД: PostgreSQL
 ************
 Новый функционал:

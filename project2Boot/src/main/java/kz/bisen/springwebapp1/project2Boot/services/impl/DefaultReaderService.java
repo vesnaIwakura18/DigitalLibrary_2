@@ -19,11 +19,11 @@ import java.util.Optional;
 @Service
 @CacheConfig(cacheNames = "readerData")
 @Transactional(readOnly = true)
-public class DefaultReaderService implements ReaderService
-{
-
+public class DefaultReaderService implements ReaderService {
     public static final int OVERDUE_DAYS = 10;
+
     private final ReaderRepository readerRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     private final BookRepository bookRepository;
@@ -39,6 +39,7 @@ public class DefaultReaderService implements ReaderService
 
     @Cacheable
     public List<Reader> findAll() {
+
         return readerRepository.findAll();
     }
 
@@ -48,6 +49,7 @@ public class DefaultReaderService implements ReaderService
         bookRepository.findByOwnerId(id).stream()
                 .filter(a -> a.getDateTimeTaken().plusDays(OVERDUE_DAYS).isBefore(LocalDateTime.now()))
                 .forEach(a -> a.setOverdue(true));
+
         return foundReader.orElse(null);
     }
 
@@ -64,7 +66,7 @@ public class DefaultReaderService implements ReaderService
     @Transactional
     public void save(Reader reader) {
         reader.setPassword(passwordEncoder.encode(reader.getPassword()));
-        reader.setRole("ROLE_USER");
+
         readerRepository.save(reader);
     }
 
@@ -74,13 +76,14 @@ public class DefaultReaderService implements ReaderService
         updatedReader.setId(id);
         updatedReader.setRole("ROLE_USER");
         updatedReader.setPassword(passwordEncoder.encode(updatedReader.getPassword()));
+
         readerRepository.save(updatedReader);
     }
 
     @Transactional
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void delete(int id) {
+
         readerRepository.deleteById(id);
     }
-
 }

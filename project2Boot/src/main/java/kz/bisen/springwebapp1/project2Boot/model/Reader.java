@@ -10,10 +10,10 @@ import javax.validation.constraints.*;
 public class Reader {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reader_id")
+    @Column(name = "id")
     private int id;
 
-    @Column(name = "fullname")
+    @Column(name = "full_name")
     @NotEmpty(message = "ФИО не может быть пустым")
     @Size(min = 2, max = 100, message = "Слишком короткое либо слишком длинное ФИО")
     @Pattern(regexp = "[A-Z]\\w+ [A-Z]\\w+ [A-Z]\\w+", message = "Некорректное ФИО")

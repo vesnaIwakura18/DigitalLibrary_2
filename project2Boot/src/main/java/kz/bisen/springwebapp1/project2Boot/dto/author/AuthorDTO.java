@@ -1,33 +1,24 @@
-package kz.bisen.springwebapp1.project2Boot.model;
+package kz.bisen.springwebapp1.project2Boot.dto.author;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
-import java.util.List;
 
-@Entity
-@Table
-public class Author {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AuthorDTO {
     private Integer id;
 
-    @Column
     @NotEmpty
     private String firstName;
 
-    @Column
     @NotEmpty
     private String lastName;
 
-    @OneToMany(mappedBy = "author")
-    private List<Book> books;
-
-    public Author(String firstName, String lastName) {
+    public AuthorDTO(Integer id, String firstName, String lastName) {
+        this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-    }
-
-    public Author() {
     }
 
     public Integer getId() {
@@ -52,13 +43,5 @@ public class Author {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
     }
 }

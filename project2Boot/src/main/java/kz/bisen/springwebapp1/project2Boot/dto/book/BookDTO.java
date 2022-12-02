@@ -1,5 +1,6 @@
 package kz.bisen.springwebapp1.project2Boot.dto.book;
 
+import kz.bisen.springwebapp1.project2Boot.dto.author.AuthorDTO;
 import kz.bisen.springwebapp1.project2Boot.kafka.BookIsbnMessage;
 import lombok.Data;
 
@@ -25,12 +26,15 @@ public class BookDTO {
     @NotEmpty(message = "ISBN must not be empty")
     private String isbn;
 
-    public BookDTO(Integer id, String title, LocalDateTime issueDateTime, Integer amount, String isbn) {
+    private AuthorDTO authorDTO;
+
+    public BookDTO(Integer id, String title, LocalDateTime issueDateTime, Integer amount, String isbn, AuthorDTO authorDTO) {
         this.id = id;
         this.title = title;
         this.issueDateTime = issueDateTime;
         this.amount = amount;
         this.isbn = isbn;
+        this.authorDTO = authorDTO;
     }
 
     public BookDTO() {
@@ -76,6 +80,14 @@ public class BookDTO {
         this.isbn = isbn;
     }
 
+    public AuthorDTO getAuthorDTO() {
+        return authorDTO;
+    }
+
+    public void setAuthorDTO(AuthorDTO authorDTO) {
+        this.authorDTO = authorDTO;
+    }
+
     @Override
     public String toString() {
         return "BookDTO{" +
@@ -85,4 +97,6 @@ public class BookDTO {
                 ", amount=" + amount +
                 '}';
     }
+
+
 }

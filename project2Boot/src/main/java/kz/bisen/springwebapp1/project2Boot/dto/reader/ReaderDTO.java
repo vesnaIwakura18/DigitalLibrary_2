@@ -1,20 +1,18 @@
 package kz.bisen.springwebapp1.project2Boot.dto.reader;
 
-import kz.bisen.springwebapp1.project2Boot.dto.book.BookDTO;
-import kz.bisen.springwebapp1.project2Boot.model.Book;
 import org.hibernate.validator.constraints.Length;
+
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.util.List;
 
 public class ReaderDTO {
     private int id;
 
     @NotEmpty(message = "ФИО не может быть пустым")
     @Size(min = 2, max = 100, message = "Слишком короткое либо слишком длинное ФИО")
-    @Pattern(regexp = "[A-Z]\\w+ [A-Z]\\w+ [A-Z]\\w+", message ="Некорректное ФИО")
+    @Pattern(regexp = "[A-Z]\\w+ [A-Z]\\w+ [A-Z]\\w+", message = "Некорректное ФИО")
     private String fullName;
 
     @Min(value = 1900, message = "Некорректная дата рождения")

@@ -1,6 +1,7 @@
 package kz.bisen.springwebapp1.project2Boot.service.impl;
 
 import kz.bisen.springwebapp1.project2Boot.model.Book;
+import kz.bisen.springwebapp1.project2Boot.repository.datajpa.DataJpaBookRepository;
 import kz.bisen.springwebapp1.project2Boot.repository.jpa.JpaBookRepository;
 import kz.bisen.springwebapp1.project2Boot.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +22,10 @@ import java.util.stream.Stream;
 @CacheConfig(cacheNames = "bookData")
 @Transactional(readOnly = true)
 public class DefaultBookService implements BookService {
-    private final JpaBookRepository repository;
+    private final DataJpaBookRepository repository;
 
     @Autowired
-    public DefaultBookService(JpaBookRepository repository) {
+    public DefaultBookService(DataJpaBookRepository repository) {
         this.repository = repository;
     }
 

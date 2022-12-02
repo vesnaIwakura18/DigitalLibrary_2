@@ -8,12 +8,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table
+@SecondaryTable(name = "book_amount", pkJoinColumns = @PrimaryKeyJoinColumn(name = "book_id", referencedColumnName = "id"))
 public class Book {
     @Id
-    @JoinColumns(value = {
-            @JoinColumn(name = "id", table = "book"),
-            @JoinColumn(name = "id", table = "book_amount")
-    })
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
@@ -26,12 +23,10 @@ public class Book {
     @Min(value = 0, message = "Некорректная дата публикации")
     private LocalDateTime issueDateTime;
 
-    @Column
-    @JoinTable(name = "book_amount")
+    @Column(table = "book_amount")
     private int amount;
 
-    @Column
-    @JoinTable(name = "book_amount")
+    @Column(table = "book_amount")
     private int minAmount;
 
     @Column
@@ -44,18 +39,13 @@ public class Book {
     public Book() {
     }
 
-    public Book(Integer id,
-                String title,
-                LocalDateTime issueDateTime,
-                int amount,
-                int minAmount,
-                String isbn) {
-        this.id = id;
+    public Book(String title, LocalDateTime issueDateTime, int amount, int minAmount, String isbn, Author author) {
         this.title = title;
         this.issueDateTime = issueDateTime;
         this.amount = amount;
         this.minAmount = minAmount;
         this.isbn = isbn;
+        this.author = author;
     }
 
     public Integer getId() {
@@ -96,6 +86,14 @@ public class Book {
 
     public void setMinAmount(int minAmount) {
         this.minAmount = minAmount;
+    }
+
+    public Author getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     public String getIsbn() {

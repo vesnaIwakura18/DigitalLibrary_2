@@ -1,7 +1,6 @@
 package kz.bisen.springwebapp1.project2Boot.dto.book;
 
-import kz.bisen.springwebapp1.project2Boot.dto.author.AuthorDTO;
-import kz.bisen.springwebapp1.project2Boot.kafka.BookIsbnMessage;
+import kz.bisen.springwebapp1.project2Boot.dto.author.AuthorDto;
 import lombok.Data;
 
 import javax.validation.constraints.Min;
@@ -11,8 +10,6 @@ import java.time.LocalDateTime;
 
 @Data
 public class BookDTO {
-    private Integer id;
-
     @NotEmpty(message = "Название книги не может быть пустым")
     @Size(min = 2, max = 150, message = "Некорректное название")
     private String title;
@@ -20,32 +17,46 @@ public class BookDTO {
     @Min(value = 0, message = "Некорректная дата публикации")
     private LocalDateTime issueDateTime;
 
-    @Min(value = 1, message = "Минимальное значение кол-ва книг: 1")
+    @Min(value = 0, message = "Минимальное значение кол-ва книг: 0")
     private Integer amount;
+
+    @NotEmpty
+    private Integer minAmount;
 
     @NotEmpty(message = "ISBN must not be empty")
     private String isbn;
 
-    private AuthorDTO authorDTO;
+    private String authorFirstName;
 
-    public BookDTO(Integer id, String title, LocalDateTime issueDateTime, Integer amount, String isbn, AuthorDTO authorDTO) {
-        this.id = id;
+    private String authorLastName;
+
+    public BookDTO(
+            String title,
+            LocalDateTime issueDateTime,
+            Integer amount,
+            Integer minAmount,
+            String isbn,
+            String authorFirstName,
+            String authorLastName
+    ) {
         this.title = title;
         this.issueDateTime = issueDateTime;
         this.amount = amount;
         this.isbn = isbn;
-        this.authorDTO = authorDTO;
+        this.minAmount = minAmount;
+        this.authorFirstName = authorFirstName;
+        this.authorLastName = authorLastName;
     }
 
     public BookDTO() {
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getMinAmount() {
+        return minAmount;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setMinAmount(Integer minAmount) {
+        this.minAmount = minAmount;
     }
 
     public Integer getAmount() {
@@ -80,23 +91,19 @@ public class BookDTO {
         this.isbn = isbn;
     }
 
-    public AuthorDTO getAuthorDTO() {
-        return authorDTO;
+    public String getAuthorFirstName() {
+        return authorFirstName;
     }
 
-    public void setAuthorDTO(AuthorDTO authorDTO) {
-        this.authorDTO = authorDTO;
+    public void setAuthorFirstName(String authorFirstName) {
+        this.authorFirstName = authorFirstName;
     }
 
-    @Override
-    public String toString() {
-        return "BookDTO{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", issueDateTime=" + issueDateTime +
-                ", amount=" + amount +
-                '}';
+    public String getAuthorLastName() {
+        return authorLastName;
     }
 
-
+    public void setAuthorLastName(String authorLastName) {
+        this.authorLastName = authorLastName;
+    }
 }

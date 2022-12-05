@@ -1,13 +1,12 @@
 package kz.bisen.springwebapp1.project2Boot.dto.author;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotEmpty;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import kz.bisen.springwebapp1.project2Boot.dto.book.BookDTO;
 
-public class AuthorDTO {
-    private Integer id;
+import javax.validation.constraints.NotEmpty;
+import java.util.List;
+
+public class AuthorDto {
 
     @NotEmpty
     private String firstName;
@@ -15,19 +14,12 @@ public class AuthorDTO {
     @NotEmpty
     private String lastName;
 
-    public AuthorDTO(Integer id, String firstName, String lastName) {
-        this.id = id;
+    public AuthorDto(String firstName, String lastName) {
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    public AuthorDto() {}
 
     public String getFirstName() {
         return firstName;

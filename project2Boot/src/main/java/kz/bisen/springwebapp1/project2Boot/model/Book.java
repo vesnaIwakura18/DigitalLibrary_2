@@ -19,7 +19,7 @@ public class Book {
     @Size(min = 2, max = 150, message = "Некорректное название")
     private String title;
 
-    @Column
+    @Column(name = "issue_datetime")
     @Min(value = 0, message = "Некорректная дата публикации")
     private LocalDateTime issueDateTime;
 

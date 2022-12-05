@@ -7,11 +7,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class PublisherBookDTOBuilder {
     public PublisherBookDTO fromPublisherBook(PublisherBook publisherBook) {
-        return new PublisherBookDTO(publisherBook.getId(),
+        return new PublisherBookDTO(
                 publisherBook.getTitle(),
                 publisherBook.getAuthorFirstName(),
                 publisherBook.getAuthorLastName(),
                 publisherBook.getIsbn(),
-                publisherBook.getIssueDateTime());
+                publisherBook.getIssueDateTime()
+        );
     }
+
+//    public PublisherBook fromPublisherBookDTO(PublisherBookDTO publisherBookDTO) {
+//        return new PublisherBook(
+//                publisherBookDTO.getTitle(),
+//                publisherBookDTO.getAuthorFirstName(),
+//                publisherBookDTO.getAuthorLastName(),
+//                publisherBookDTO.getIsbn(),
+//                publisherBookDTO.getIssueDateTime()
+//        );
+//    }
 }

@@ -1,8 +1,10 @@
 package kz.bisen.springwebapp1.project2Boot.controller;
 
+import kz.bisen.springwebapp1.project2Boot.dto.book.BookDTO;
+import kz.bisen.springwebapp1.project2Boot.dto.book.impl.DefaultBookDTOBuilder;
 import kz.bisen.springwebapp1.project2Boot.dto.publisher_book.PublisherBookDTO;
 import kz.bisen.springwebapp1.project2Boot.dto.publisher_book.impl.PublisherBookDTOBuilder;
-import kz.bisen.springwebapp1.project2Boot.service.impl.DefaultPublisherBookService;
+import kz.bisen.springwebapp1.project2Boot.rest_template.PublisherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,38 +13,43 @@ import java.util.List;
 @RestController
 @RequestMapping("/publisher-book")
 public class PublisherBookController {
-    private final DefaultPublisherBookService service;
+    private final PublisherService service;
+
+    private final DefaultBookDTOBuilder bookDtoBuilder;
 
     private final PublisherBookDTOBuilder dtoBuilder;
 
     @Autowired
-    public PublisherBookController(DefaultPublisherBookService service, PublisherBookDTOBuilder dtoBuilder) {
+    public PublisherBookController(
+            PublisherService service,
+            DefaultBookDTOBuilder bookDtoBuilder,
+            PublisherBookDTOBuilder dtoBuilder
+    ) {
         this.service = service;
+        this.bookDtoBuilder = bookDtoBuilder;
         this.dtoBuilder = dtoBuilder;
     }
 
-    @GetMapping("/new")
-    public List<PublisherBookDTO> getAllByNew() {
-        return service.findAllByNew().stream().map(dtoBuilder::fromPublisherBook).toList();
-    }
-
-    @GetMapping("/search")
-    public PublisherBookDTO getByIsbn(@RequestParam("isbn") String isbn) throws Exception {
-        return dtoBuilder.fromPublisherBook(service.findByIsbn(isbn));
-    }
-
-    @PutMapping("/search")
-    public void saveByIsbn(@RequestBody String isbn) throws Exception {
-        service.saveAsBookByIsbn(isbn);
+    @PostMapping("/isbn")
+    public List<BookDTO> getByIsbns(@RequestBody List<String> isbns) {
+        return service.getAllByIsbns(isbns);
     }
 
     @PutMapping("/save")
-    public void saveAll() {
-        service.saveAllAsBook();
+    public void save(@RequestBody List<BookDTO> bookDTOS) {
+        service.saveBooks(
+                bookDTOS
+                        .stream()
+                        .map(bookDtoBuilder::fromBookDTO)
+                        .toList()
+        );
     }
 
-    @PutMapping("/reject/{id}")
-    public void reject(@PathVariable("id") Long id) throws Exception {
-        service.rejectPublisherBook(id);
+    public List<PublisherBookDTO> getAll() {
+        return service
+                .getAllNew()
+                .stream()
+                .map(dtoBuilder::fromPublisherBook)
+                .toList();
     }
 }

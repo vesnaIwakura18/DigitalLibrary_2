@@ -35,10 +35,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        hbm2ddl:
-          auto: none
     show-sql: true
-    generate-ddl: true
 
   mvc:
     hiddenmethod:
@@ -50,3 +47,4 @@ server:
 
 cxf:
   path: /service
+

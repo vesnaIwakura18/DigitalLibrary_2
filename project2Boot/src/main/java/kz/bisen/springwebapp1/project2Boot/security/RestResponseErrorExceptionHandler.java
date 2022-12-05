@@ -1,8 +1,8 @@
 package kz.bisen.springwebapp1.project2Boot.security;
 
 import kz.bisen.springwebapp1.project2Boot.error.ResponseError;
-import kz.bisen.springwebapp1.project2Boot.exception.ReaderBookNotCreatedException;
-import kz.bisen.springwebapp1.project2Boot.exception.ReaderBookNotFoundException;
+import kz.bisen.springwebapp1.project2Boot.exception.BookNotCreatedException;
+import kz.bisen.springwebapp1.project2Boot.exception.BookNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,7 +21,7 @@ public class RestResponseErrorExceptionHandler extends ResponseEntityExceptionHa
         return new ResponseError(HttpStatus.FORBIDDEN, "Access denied");
     }
 
-    @ExceptionHandler(value = {ReaderBookNotCreatedException.class, ReaderBookNotFoundException.class})
+    @ExceptionHandler(value = {BookNotCreatedException.class, BookNotFoundException.class})
     private ResponseError handle(ResponseStatusException exception) {
         log.error(exception.getMessage(), exception);
 

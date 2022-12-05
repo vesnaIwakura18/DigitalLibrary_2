@@ -10,11 +10,11 @@ import org.springframework.context.annotation.Configuration;
 import javax.xml.ws.Endpoint;
 
 @Configuration
-public class WSConfig {
+public class WebServiceConfig {
     private final Bus bus;
 
     @Autowired
-    public WSConfig(Bus bus) {
+    public WebServiceConfig(Bus bus) {
         this.bus = bus;
     }
 

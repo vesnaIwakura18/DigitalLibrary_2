@@ -12,5 +12,4 @@ import java.util.Optional;
 public interface CrudPublisherBookRepository extends JpaRepository<PublisherBook, Long> {
     List<PublisherBook> findByStatus(PublisherBookStatus status);
 
-    Optional<PublisherBook> findByIsbn(String isbn);
 }

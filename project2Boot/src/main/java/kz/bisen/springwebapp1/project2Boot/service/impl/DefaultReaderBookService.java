@@ -1,23 +1,24 @@
 package kz.bisen.springwebapp1.project2Boot.service.impl;
 
-import kz.bisen.springwebapp1.project2Boot.exception.ReaderBookNotFoundException;
+import kz.bisen.springwebapp1.project2Boot.exception.BookNotFoundException;
 import kz.bisen.springwebapp1.project2Boot.model.ReaderBook;
 import kz.bisen.springwebapp1.project2Boot.repository.datajpa.DataJpaReaderBookRepository;
 import kz.bisen.springwebapp1.project2Boot.service.ReaderBookService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
 public class DefaultReaderBookService implements ReaderBookService {
     private final DataJpaReaderBookRepository dataJpaDataJpaReaderBookRepository;
 
-    private final ReaderBookNotFoundException notFoundException = new ReaderBookNotFoundException(HttpStatus.NOT_FOUND, "Not found");
+    private final BookNotFoundException notFoundException = new BookNotFoundException(HttpStatus.NOT_FOUND, "Not found");
 
+    @Autowired
     public DefaultReaderBookService(DataJpaReaderBookRepository dataJpaDataJpaReaderBookRepository) {
         this.dataJpaDataJpaReaderBookRepository = dataJpaDataJpaReaderBookRepository;
     }

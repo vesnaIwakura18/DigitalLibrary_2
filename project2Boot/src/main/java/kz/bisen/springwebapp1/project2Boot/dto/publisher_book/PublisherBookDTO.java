@@ -11,9 +11,6 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public class PublisherBookDTO {
-    @NotNull
-    private Long id;
-
     @NotEmpty
     private String title;
 
@@ -29,21 +26,12 @@ public class PublisherBookDTO {
     @NotNull
     private LocalDateTime issueDateTime;
 
-    public PublisherBookDTO(Long id, String title, String authorFirstName, String authorLastName, String isbn, LocalDateTime issueDateTime) {
-        this.id = id;
+    public PublisherBookDTO(String title, String authorFirstName, String authorLastName, String isbn, LocalDateTime issueDateTime) {
         this.title = title;
         this.authorFirstName = authorFirstName;
         this.authorLastName = authorLastName;
         this.isbn = isbn;
         this.issueDateTime = issueDateTime;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTitle() {

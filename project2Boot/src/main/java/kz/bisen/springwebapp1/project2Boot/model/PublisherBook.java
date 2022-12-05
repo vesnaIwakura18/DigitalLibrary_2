@@ -43,7 +43,15 @@ public class PublisherBook {
     @NotNull
     private LocalDateTime issueDateTime;
 
-    public PublisherBook(String title, String authorFirstName, String authorLastName, LocalDateTime createdAt, PublisherBookStatus status, String isbn, LocalDateTime issueDateTime) {
+    public PublisherBook(
+            String title,
+            String authorFirstName,
+            String authorLastName,
+            LocalDateTime createdAt,
+            PublisherBookStatus status,
+            String isbn,
+            LocalDateTime issueDateTime
+    ) {
         this.title = title;
         this.authorFirstName = authorFirstName;
         this.authorLastName = authorLastName;

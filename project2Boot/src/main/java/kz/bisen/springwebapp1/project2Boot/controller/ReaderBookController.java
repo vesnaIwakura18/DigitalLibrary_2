@@ -2,7 +2,7 @@ package kz.bisen.springwebapp1.project2Boot.controller;
 
 import kz.bisen.springwebapp1.project2Boot.dto.reader_book.ReaderBookDTO;
 import kz.bisen.springwebapp1.project2Boot.dto.reader_book.impl.DefaultReaderBookDTOBuilder;
-import kz.bisen.springwebapp1.project2Boot.exception.ReaderBookNotCreatedException;
+import kz.bisen.springwebapp1.project2Boot.exception.BookNotCreatedException;
 import kz.bisen.springwebapp1.project2Boot.model.ReaderBook;
 import kz.bisen.springwebapp1.project2Boot.service.impl.DefaultReaderBookService;
 import lombok.extern.slf4j.Slf4j;
@@ -54,7 +54,7 @@ public class ReaderBookController {
                         .append(error.getDefaultMessage())
                         .append(";");
             }
-            throw new ReaderBookNotCreatedException(HttpStatus.NOT_ACCEPTABLE, errorMsg.toString());
+            throw new BookNotCreatedException(HttpStatus.NOT_ACCEPTABLE, errorMsg.toString());
         }
         final ReaderBook readerBook = defaultReaderBookDTOBuilder.fromReaderBookDTO(readerBookDTO);
 

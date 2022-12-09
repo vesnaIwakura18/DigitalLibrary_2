@@ -1,0 +1,20 @@
+-- insert into author (first_name, last_name)
+-- values ('Test1', 'Test1');
+-- insert into author (first_name, last_name)
+-- values ('Test2', 'Test2');
+-- insert into author (first_name, last_name)
+-- values ('Test3', 'Test3');
+--
+-- insert into book (title, issue_year, amount, min_amount)
+-- VALUES ('Test1', 2000, 100, 10);
+-- insert into book (title, issue_year, amount, min_amount)
+-- VALUES ('Test2', 2000, 100, 10);
+-- insert into book (title, issue_year, amount, min_amount)
+-- VALUES ('Test3', 2000, 100, 10);
+--
+-- insert into author_book (author_id, book_id)
+-- VALUES (1, 1);
+-- insert into author_book (author_id, book_id)
+-- VALUES (2, 2);
+-- insert into author_book (author_id, book_id)
+-- VALUES (3, 3);

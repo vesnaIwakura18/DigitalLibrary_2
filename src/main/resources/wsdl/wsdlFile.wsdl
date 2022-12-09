@@ -1,0 +1,60 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://impl.soap.springpublishingwebapp.springcourse.bisen.kz/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="SoapBookService" targetNamespace="http://impl.soap.springpublishingwebapp.springcourse.bisen.kz/">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://impl.soap.springpublishingwebapp.springcourse.bisen.kz/" elementFormDefault="unqualified" targetNamespace="http://impl.soap.springpublishingwebapp.springcourse.bisen.kz/" version="1.0">
+            <xs:element name="get-books" type="tns:get-books"/>
+            <xs:element name="get-booksResponse" type="tns:get-booksResponse"/>
+            <xs:complexType name="get-books">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="arg0" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="get-booksResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:bookDto"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="bookDto">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="authorFirstName" type="xs:string"/>
+                    <xs:element minOccurs="0" name="authorLastName" type="xs:string"/>
+                    <xs:element minOccurs="0" name="isbn" type="xs:string"/>
+                    <xs:element minOccurs="0" name="issueDateTime" type="tns:localDateTime"/>
+                    <xs:element minOccurs="0" name="minAmount" type="xs:int"/>
+                    <xs:element minOccurs="0" name="title" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType final="extension restriction" name="localDateTime">
+                <xs:sequence/>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="get-books">
+        <wsdl:part element="tns:get-books" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="get-booksResponse">
+        <wsdl:part element="tns:get-booksResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="SoapBookService">
+        <wsdl:operation name="get-books">
+            <wsdl:input message="tns:get-books" name="get-books"> </wsdl:input>
+            <wsdl:output message="tns:get-booksResponse" name="get-booksResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="SoapBookServiceSoapBinding" type="tns:SoapBookService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="get-books">
+            <soap:operation soapAction="" style="document"/>
+            <wsdl:input name="get-books">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="get-booksResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="SoapBookService">
+        <wsdl:port binding="tns:SoapBookServiceSoapBinding" name="SoapBookServicePort">
+            <soap:address location="http://localhost:8080/service/book"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

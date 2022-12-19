@@ -1,5 +1,5 @@
 
-package kz.bisen.springwebapp1.project2Boot.soap;
+package kz.bisen.springwebapp1.project2Boot.soap.generated;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlElementDecl;
@@ -51,19 +51,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link BookDto }
+     * Create an instance of {@link SoapBook }
      * 
      */
-    public BookDto createBookDto() {
-        return new BookDto();
-    }
-
-    /**
-     * Create an instance of {@link LocalDateTime }
-     * 
-     */
-    public LocalDateTime createLocalDateTime() {
-        return new LocalDateTime();
+    public SoapBook createSoapBook() {
+        return new SoapBook();
     }
 
     /**

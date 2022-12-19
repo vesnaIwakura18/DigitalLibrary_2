@@ -10,21 +10,19 @@
             </xs:complexType>
             <xs:complexType name="get-booksResponse">
                 <xs:sequence>
-                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:bookDto"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:soapBook"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="bookDto">
+            <xs:complexType name="soapBook">
                 <xs:sequence>
+                    <xs:element name="amount" type="xs:int"/>
                     <xs:element minOccurs="0" name="authorFirstName" type="xs:string"/>
                     <xs:element minOccurs="0" name="authorLastName" type="xs:string"/>
                     <xs:element minOccurs="0" name="isbn" type="xs:string"/>
-                    <xs:element minOccurs="0" name="issueDateTime" type="tns:localDateTime"/>
+                    <xs:element minOccurs="0" name="issueDateTime" type="xs:string"/>
                     <xs:element minOccurs="0" name="minAmount" type="xs:int"/>
                     <xs:element minOccurs="0" name="title" type="xs:string"/>
                 </xs:sequence>
-            </xs:complexType>
-            <xs:complexType final="extension restriction" name="localDateTime">
-                <xs:sequence/>
             </xs:complexType>
         </xs:schema>
     </wsdl:types>

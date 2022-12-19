@@ -7,6 +7,8 @@ import kz.bisen.springwebapp1.project2Boot.repository.datajpa.CrudAuthorReposito
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class DefaultBookDTOBuilder implements BookDTOBuilder {
     private final CrudAuthorRepository authorRepository;
@@ -44,8 +46,5 @@ public class DefaultBookDTOBuilder implements BookDTOBuilder {
         );
     }
 
-//    public Book fromSoapBookDto(BookDto bookDto) {
-//        return new Book(bookDto.getTitle(), bookDto.getIssueDateTime().toString(), 0, bookDto.getMinAmount(), bookDto.getIsbn(), authorRepository.findAuthorByFirstNameAndLastName(
-//                bookDto.getAuthorFirstName(), bookDto.getAuthorLastName()).orElse(null));
-//    }
+
 }

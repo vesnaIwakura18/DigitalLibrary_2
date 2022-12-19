@@ -1,5 +1,5 @@
 
-package kz.bisen.springwebapp1.project2Boot.soap;
+package kz.bisen.springwebapp1.project2Boot.soap.generated;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -7,19 +7,20 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for bookDto complex type.
+ * <p>Java class for soapBook complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="bookDto"&gt;
+ * &lt;complexType name="soapBook"&gt;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
+ *         &lt;element name="amount" type="{http://www.w3.org/2001/XMLSchema}int"/&gt;
  *         &lt;element name="authorFirstName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="authorLastName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="isbn" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="issueDateTime" type="{http://impl.soap.springpublishingwebapp.springcourse.bisen.kz/}localDateTime" minOccurs="0"/&gt;
+ *         &lt;element name="issueDateTime" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="minAmount" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/&gt;
  *         &lt;element name="title" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
@@ -31,7 +32,8 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "bookDto", propOrder = {
+@XmlType(name = "soapBook", propOrder = {
+    "amount",
     "authorFirstName",
     "authorLastName",
     "isbn",
@@ -39,14 +41,31 @@ import javax.xml.bind.annotation.XmlType;
     "minAmount",
     "title"
 })
-public class BookDto {
+public class SoapBook {
 
+    protected int amount;
     protected String authorFirstName;
     protected String authorLastName;
     protected String isbn;
-    protected LocalDateTime issueDateTime;
+    protected String issueDateTime;
     protected Integer minAmount;
     protected String title;
+
+    /**
+     * Gets the value of the amount property.
+     * 
+     */
+    public int getAmount() {
+        return amount;
+    }
+
+    /**
+     * Sets the value of the amount property.
+     * 
+     */
+    public void setAmount(int value) {
+        this.amount = value;
+    }
 
     /**
      * Gets the value of the authorFirstName property.
@@ -125,10 +144,10 @@ public class BookDto {
      * 
      * @return
      *     possible object is
-     *     {@link LocalDateTime }
+     *     {@link String }
      *     
      */
-    public LocalDateTime getIssueDateTime() {
+    public String getIssueDateTime() {
         return issueDateTime;
     }
 
@@ -137,10 +156,10 @@ public class BookDto {
      * 
      * @param value
      *     allowed object is
-     *     {@link LocalDateTime }
+     *     {@link String }
      *     
      */
-    public void setIssueDateTime(LocalDateTime value) {
+    public void setIssueDateTime(String value) {
         this.issueDateTime = value;
     }
 

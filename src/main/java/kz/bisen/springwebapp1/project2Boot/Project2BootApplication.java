@@ -23,17 +23,17 @@ public class Project2BootApplication {
 
     }
 
-    @Bean
-    public CommandLineRunner runOnStartup(SoapBookBuilder builder) {
-        return args -> {
-            SoapBookService_Service serviceImpl = new SoapBookService_Service();
-            SoapBookService service = serviceImpl.getSoapBookServicePort();
-
-            service.getBooks(new ArrayList<>(Arrays.asList("1", "2")))
-                    .stream()
-                    .map(builder::fromSoapBook)
-                    .forEach(System.out::println);
-        };
-    }
+//    @Bean
+//    public CommandLineRunner runOnStartup(SoapBookBuilder builder) {
+//        return args -> {
+//            SoapBookService_Service serviceImpl = new SoapBookService_Service();
+//            SoapBookService service = serviceImpl.getSoapBookServicePort();
+//
+//            service.getBooks(new ArrayList<>(Arrays.asList("1", "2")))
+//                    .stream()
+//                    .map(builder::fromSoapBook)
+//                    .forEach(System.out::println);
+//        };
+//    }
 
 }
